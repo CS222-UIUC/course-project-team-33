@@ -9,5 +9,5 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - run: npx eslint ./src/*.jsx
+      - run: npx eslint src/*.jsx
 

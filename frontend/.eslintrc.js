@@ -20,5 +20,5 @@ module.exports = {
     indent: 'off',
     'react/jsx-indent': 'off',
     'jsx-quotes': 'warn',
-  }
+  },
 };

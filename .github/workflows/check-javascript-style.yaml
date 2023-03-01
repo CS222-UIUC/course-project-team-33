@@ -1,0 +1,14 @@
+name: check-javascript-style
+run-name: ${{ github.actor }} is checking JS style
+on: [push]
+jobs:
+  check-with-eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm init @eslint/config
+      - run: ./node_modules/.bin/eslint *.js
+

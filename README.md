@@ -6,3 +6,5 @@ This is the backend branch of Multi-Language Text Summary Google Extension Proje
 * Tianwei Qing
 * Zirui Wang
 * Zihan Ming
+
+#### Set up server by Django

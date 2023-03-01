@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import "./popup.css";
+import './popup.css';
 
 function Popup() {
     return (

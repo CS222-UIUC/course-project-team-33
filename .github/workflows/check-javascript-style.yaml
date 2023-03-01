@@ -1,5 +1,5 @@
 name: check-javascript-style
-run-name: ${{ github.actor }} is checking JS style
+run-name: ${{ github.actor }} is checking javascript files styling
 on: [push]
 jobs:
   check-with-eslint:
@@ -9,6 +9,5 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - run: npm init @eslint/config
-      - run: ./node_modules/.bin/eslint *.js
+      - run: npx eslint ./src/*.jsx
 

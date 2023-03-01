@@ -1,0 +1,9 @@
+.entrance {
+    height: 300px;
+    width: 300px;
+    background-color: rgb(35, 42, 42);
+}
+
+.entrance .app-name {
+    color: azure;
+}

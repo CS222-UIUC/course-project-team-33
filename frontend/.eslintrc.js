@@ -20,5 +20,6 @@ module.exports = {
     indent: 'off',
     'react/jsx-indent': 'off',
     'jsx-quotes': 'warn',
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
   },
 };

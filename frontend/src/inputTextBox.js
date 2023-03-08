@@ -9,6 +9,8 @@ function myBlockStyleFn(contentBlock) {
   if (type === 'blockquote') {
     return 'superFancyBlockquote';
   }
+
+  return '';
 }
 
 export default function TextBox() {
@@ -18,10 +20,11 @@ export default function TextBox() {
 
   return (
     <div className="text-box">
-      <Editor 
-        editorState={editorState} 
-        onChange={setEditorState} 
-        blockStyleFn={myBlockStyleFn}/>
+      <Editor
+        editorState={editorState}
+        onChange={setEditorState}
+        blockStyleFn={myBlockStyleFn}
+      />
     </div>
   );
 }

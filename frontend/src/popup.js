@@ -4,7 +4,7 @@ import { MdSummarize } from 'react-icons/md';
 import TextBox from './inputTextBox';
 
 import './popup.css';
-import LanguageSelect from './languageDropDown.js';
+import LanguageSelect from './languageDropDown';
 
 function Popup() {
     window.React = React;
@@ -12,7 +12,7 @@ function Popup() {
     return (
         <div className="entrance">
             <div className="icon">
-                <MdSummarize color="rgba(254, 245, 239, 0.66)" size={35}/>
+                <MdSummarize color="rgba(254, 245, 239, 0.66)" size={35} />
             </div>
 
             <div className="icon-text">

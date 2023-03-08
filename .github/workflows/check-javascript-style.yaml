@@ -10,5 +10,5 @@ jobs:
         with:
           node-version: '16'
       - run: npm install --save-dev eslint
-      - run: npx eslint frontend/src/*.jsx
+      - run: npx eslint frontend/src/*.js
 

@@ -18,4 +18,3 @@ This is frontend branch of Multi-Language Text Summary Google Extension Project
 
 ## Testing:
 *  React Testing Library
-

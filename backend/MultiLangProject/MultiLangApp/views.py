@@ -9,7 +9,7 @@ from django.http import JsonResponse , HttpResponse ####
 from transformers import pipeline, set_seed
 
 
-def home(request):
+def home_page(request):
     return HttpResponse('<h1>MultiLangApp Home</h1>')
 
 def get_summary(request):

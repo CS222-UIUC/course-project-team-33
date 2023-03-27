@@ -4,6 +4,7 @@ from django.shortcuts import render
 import json
 from django.contrib.auth.models import User #####
 from django.http import JsonResponse , HttpResponse ####
+from MultiLangApp.views import get_summary
 
 
 from transformers import pipeline, set_seed
@@ -125,3 +126,30 @@ def test_summerizer_long(request):
     }
     return JsonResponse(display_msg)
 
+
+#Test Case 5: Edge Case with empty article
+def test_summerizer_empty(request):
+    summarizer = pipeline("summarization")
+    ARTICLE = ""
+    summary=summarizer(ARTICLE, max_length=50, min_length=10, do_sample=False)[0]
+    display_msg = {
+        'summary': summary,
+        'summerizer_empty': 'Sucessful'
+    }
+    return JsonResponse(display_msg)
+
+#Test Case 5: Edge Case with random word
+def test_summerizer_random(request):
+    summarizer = pipeline("summarization")
+    ARTICLE = """adsfljasldfj dadf ddsfjwo kdlajsf"""
+    summary=summarizer(ARTICLE, max_length=50, min_length=10, do_sample=False)[0]
+    display_msg = {
+        'summary': summary,
+        'summerizer_random': 'Sucessful'
+    }
+    return JsonResponse(display_msg)
+
+#Test Case 6: Test get_summary function
+def test_get_summary(request):
+    summary = get_summary(request)
+    return summary

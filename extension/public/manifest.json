@@ -1,0 +1,9 @@
+{
+    "name": "Multi-Language Summarizer",
+    "version": "1.0",
+    "description": "Build an Extension!",
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "./popup.html"
+    }
+  }

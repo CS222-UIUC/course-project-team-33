@@ -1,10 +1,10 @@
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
   entry: {
-    popup: './src/popup.jsx',
+    popup: './src/popup.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -12,13 +12,13 @@ module.exports = {
   },
   module: {
     rules: [{
-            test: /\.(js|jsx)$/, 
+            test: /\.(js|jsx)$/,
             exclude: /node_modules/,
             use: {
                 loader: 'babel-loader',
                 options: {
                     presets: ['@babel/preset-env', '@babel/preset-react'],
-                }
+                },
             },
         },
         {
@@ -29,13 +29,13 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({ 
+    new HtmlWebpackPlugin({
         template: './src/popup.html',
         filename: 'popup.html',
     }),
     new CopyPlugin({
         patterns: [
-            { from: "public"},
+            { from: 'public' },
         ],
     }),
   ],

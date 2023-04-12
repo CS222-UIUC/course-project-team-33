@@ -94,12 +94,15 @@ body {
 
 /* Handle */
 .input-textbox .inner::-webkit-scrollbar-thumb {
-  background: rgb(168, 167, 167);
+  border-radius: 1000000vw;
+  background: rgb(143, 141, 141);
+  border: 0.45vw solid transparent;
+  background-clip: content-box;
 }
 
 /* Handle on hover */
 .input-textbox .inner::-webkit-scrollbar-thumb:hover {
-  background: rgb(113, 110, 110);
+  background: rgb(201, 231, 206);
 }
 
 .output-textbox {
@@ -112,6 +115,13 @@ body {
   width: 280px;
 
   background-color: rgb(255, 255, 255);
+  
+  margin-bottom: 4%;
+  padding: 3%;
+  color:black;
+  min-height: fit-content;
+  border-radius: 10px;
+  word-wrap: normal;
 }
 
 .output-textbox .inner {

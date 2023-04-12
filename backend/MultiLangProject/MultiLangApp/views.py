@@ -30,14 +30,15 @@ def get_summary(request):
     return JsonResponse(data)
 
 def translate(request):
-    article = request.GET.get('article', None)
-
-    print('article:', article)
+    if request.method == 'PUT':
+        article = request.data.get('article', None)
+        print('article:', article)
+        lang = request.data.get('language', None)
     
     auth_key = "da19e392-2688-f41f-38d5-5389e9ad7b56:fx"  # Replace with your key
     translator = deepl.Translator(auth_key)
 
-    result = translator.translate_text(article, target_lang="FR")
+    result = translator.translate_text(article, target_lang=lang)
     print(result.text)  # "Bonjour, le monde !"
     res = {
         'translation': result.text,

@@ -10,59 +10,62 @@ import LanguageSelect from './languageDropDown.js';
 function App() {
     const [queryText, setQueryText] = useState('');
     const [returnedSummary, setReturnedSummary] = useState('');
+    const [language, setLanguage] = useState('EN-US');
 
     useEffect(() => {
-        const sendQuery = async (queryText) => {
-            console.log("sending Query: ", queryText);
-            var data = await fetch('http://localhost:8000/MultiLangApp/post_summary/', {
+        let data;
+        const sendQuery = async () => {
+            console.log('sending Query: ', queryText);
+            data = await fetch('http://localhost:8000/MultiLangApp/post_summary/', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    article: queryText
-                })
-            })
-    
+                    article: queryText,
+                    language,
+                }),
+            });
+
             data = await data.json();
             console.log('successfully summerized');
             console.log(data);
-    
-            return data['summary'];
-        }
-        
-        async function fetchData(queryText) {
-            const response = await sendQuery(queryText);
-            let summaryText = '';
-            for (let i = 0; i < response.length; i++) {
-                summaryText = summaryText + ' ' + response[i];
+
+            return data.summary;
+        };
+
+        async function fetchData() {
+            if (queryText.length === 0) {
+                return;
             }
-            console.log(summaryText);
-            setReturnedSummary(summaryText);
+
+            const response = await sendQuery(queryText);
+
+            console.log(response);
+            setReturnedSummary(response);
         }
-        
         fetchData(queryText);
-    }, [queryText]);
+    }, [queryText, language]);
 
     return (
         <div className="entrance">
-            <div className='icon'> 
-                <MdSummarize color='rgba(254, 245, 239, 0.66)' size={35}/>
+            <div className="icon">
+                <MdSummarize color="rgba(254, 245, 239, 0.66)" size={35} />
             </div>
 
-            <div className='icon-text'>
+            <div className="icon-text">
                 {'Multi-Language \n Summarizer'}
             </div>
 
             <div className='out-most-wrapper'>
                 <div className="input-textbox">
                     <div className="inner">
-                        <InputTextBox setQueryText={setQueryText}/>
+                        <InputTextBox setQueryText={setQueryText} />
                     </div>
                 </div>
 
                 <div className='language-box'>
-                    <LanguageSelect />
+                    <LanguageSelect setLanguage={setLanguage} />
                 </div>
 
                 <div className="output-textbox">

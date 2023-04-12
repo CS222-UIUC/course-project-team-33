@@ -102,7 +102,7 @@ body {
 
 /* Handle on hover */
 .input-textbox .inner::-webkit-scrollbar-thumb:hover {
-  background: rgb(201, 231, 206);
+  background: rgb(143, 141, 141);
 }
 
 .output-textbox {
@@ -115,15 +115,6 @@ body {
   width: 280px;
 
   background-color: rgb(255, 255, 255);
-  
-  margin-bottom: 4%;
-  padding: 3%;
-  color:black;
-  min-height: fit-content;
-  font-size: medium;
-  border-radius: 10px;
-  word-wrap: normal;
-
 }
 
 .output-textbox .inner {

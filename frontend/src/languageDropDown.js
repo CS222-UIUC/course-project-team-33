@@ -1,12 +1,13 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
 import { useState } from 'react';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 import './languageDropDown.css';
 
-function LanguageSelect() {
+function LanguageSelect({ setLanguage }) {
   const [open, setOpen] = useState(false);
-  const [language, setLanguage] = useState('English');
+  const [displayLanguage, setDisplayLanguage] = useState('English');
 
   const handleOpen = () => {
     setOpen(!open);
@@ -14,13 +15,18 @@ function LanguageSelect() {
 
   const handleLanguageClick = (languageChange) => {
     setOpen(false);
-    setLanguage(languageChange);
+    setDisplayLanguage(languageChange);
+    if (languageChange === '中文') {
+      setLanguage('ZH');
+    } else if (languageChange === 'English') {
+      setLanguage('EN-US');
+    }
   };
 
   return (
     <div className="menu-wrapper">
       <button className="menu-close" type="button" onClick={handleOpen}>
-        {language}
+        {displayLanguage}
       </button>
 
       <div className="menu-icon">

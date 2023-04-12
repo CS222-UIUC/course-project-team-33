@@ -12,10 +12,11 @@ function Popup() {
 
     const [queryText, setQueryText] = useState('');
     const [returnedSummary, setReturnedSummary] = useState('');
+    const [language, setLanguage] = useState('EN-US');
 
     useEffect(() => {
         let data;
-        const sendQuery = async (queryText) => {
+        const sendQuery = async () => {
             console.log('sending Query: ', queryText);
             data = await fetch('http://localhost:8000/MultiLangApp/post_summary/', {
                 method: 'POST',
@@ -24,6 +25,7 @@ function Popup() {
                 },
                 body: JSON.stringify({
                     article: queryText,
+                    language,
                 }),
             });
 
@@ -34,17 +36,18 @@ function Popup() {
             return data.summary;
         };
 
-        async function fetchData(queryText) {
-            const response = await sendQuery(queryText);
-            let summaryText = '';
-            for (let i = 0; i < response.length; i += 1) {
-                summaryText = summaryText + ' ' + response[i];
+        async function fetchData() {
+            if (queryText.length === 0) {
+                return;
             }
-            console.log(summaryText);
-            setReturnedSummary(summaryText);
+
+            const response = await sendQuery(queryText);
+
+            console.log(response);
+            setReturnedSummary(response);
         }
         fetchData(queryText);
-    }, [queryText]);
+    }, [queryText, language]);
 
     return (
         <div className="entrance">
@@ -56,15 +59,15 @@ function Popup() {
                 {'Multi-Language \n Summarizer'}
             </div>
 
-            <div className='out-most-wrapper'>
+            <div className="out-most-wrapper">
                 <div className="input-textbox">
                     <div className="inner">
                         <InputTextBox setQueryText={setQueryText} />
                     </div>
                 </div>
 
-                <div className='language-box'>
-                    <LanguageSelect />
+                <div className="language-box">
+                    <LanguageSelect setLanguage={setLanguage} />
                 </div>
 
                 <div className="output-textbox">

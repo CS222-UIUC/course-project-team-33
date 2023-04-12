@@ -32,34 +32,20 @@ def post_summary(request):
     article = json.loads(request.body.decode("utf-8")).get('article')
     
     print('article:', article)
-    print(type(article))
 
     data = {
         'raw': 'Failed',
     }
     
     if len(article) > 0 :
-        import nltk
-        nltk.download('punkt')
-        from sumy.parsers.plaintext import PlaintextParser
-        from sumy.nlp.tokenizers import Tokenizer
-
-        document1 = article
-        parser = PlaintextParser.from_string(document1,Tokenizer("english"))
-
-        from sumy.summarizers.lsa import LsaSummarizer
-        summarizer_lsa = LsaSummarizer()
-        summary_2 = summarizer_lsa(parser.document,10)
-
-        sentences = []
-        for sentence in summary_2:
-            print(type(sentence))
-            sentences.append(str(sentence))
-
+        summarizer = pipeline("summarization")
+        max_length = len(article.split()) // 3
+        sentences = summarizer(article, max_length=max_length, min_length=10, do_sample=False)[0] 
         data = {
-            'summary': sentences,
+            'summary': sentences['summary_text'],
             'raw': 'Successful',
         }
+
 
         print('json-data to be sent: ', data)
 

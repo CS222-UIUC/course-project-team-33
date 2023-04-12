@@ -1,15 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { Editor, EditorState, ContentState } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 
 import './inputTextBox.css';
-
-function myBlockStyleFn(contentBlock) {
-  const type = contentBlock.getType();
-  if (type === 'blockquote') {
-    return 'superFancyBlockquote';
-  }
-}
 
 export default function OutputTextBox({ returnedSummary }) {
   const [editorState, setEditorState] = useState(() => (
@@ -30,7 +24,6 @@ export default function OutputTextBox({ returnedSummary }) {
       <Editor
         editorState={editorState}
         onChange={setEditorState}
-        blockStyleFn={myBlockStyleFn}
       />
     </div>
   );

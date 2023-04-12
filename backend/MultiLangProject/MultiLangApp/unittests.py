@@ -5,6 +5,8 @@ import json
 from django.contrib.auth.models import User #####
 from django.http import JsonResponse , HttpResponse ####
 from MultiLangApp.views import get_summary
+import deepl
+import nltk
 
 
 from transformers import pipeline, set_seed
@@ -155,3 +157,66 @@ def test_summerizer_random(request):
 def test_get_summary(request):
     summary = get_summary(request)
     return summary
+
+#Test Case 7: Test translate function
+def test_translate(request):
+    refs = [["Je suis allé au magasin et j\'ai acheté du lait."]]
+    rest = []
+    article = "I went to the store and bought some milk."
+    lang = "FR"
+    auth_key = "da19e392-2688-f41f-38d5-5389e9ad7b56:fx"  # Replace with your key
+    translator = deepl.Translator(auth_key)
+    result = translator.translate_text(article, target_lang=lang)
+    rest.append(result.text)
+    score = nltk.translate.bleu_score.corpus_bleu(refs, rest)
+    res = {
+        'translation': result.text,
+        'score':score,
+        'raw': 'Successful',
+    }
+    print('json-data to be sent: ', res)
+
+    return JsonResponse(res)
+
+
+#Test Case 8: Test translate function-2
+def test_translate2(request):
+    refs = [["""L'intelligence artificielle (IA) est l'intelligence - perception, synthèse et déduction d'informations - démontrée par des machines, par opposition à l'intelligence démontrée par des êtres non humains. 
+                l'information - démontrée par les machines, par opposition à l'intelligence démontrée par les animaux non humains et les humains. 
+                non humains et les humains. La reconnaissance vocale, la vision par ordinateur, la traduction entre les langues (naturelles) sont autant d'exemples de tâches dans lesquelles l'intelligence artificielle est mise en œuvre, 
+                reconnaissance vocale, la vision par ordinateur, la traduction entre les langues (naturelles), ainsi que d'autres mappages d'entrées. 
+                entrées.
+                
+                Les applications de l'IA comprennent les moteurs de recherche avancés sur le web (par exemple, Google Search), les systèmes de recommandation (utilisés par YouTube, Amazon, etc.) et les systèmes d'aide à la décision. 
+                (utilisés par YouTube, Amazon et Netflix), la compréhension de la parole humaine (comme Siri et Alexa), les systèmes de conduite autonome. 
+                et Alexa), les voitures autopilotées (par exemple, Waymo), les outils génératifs ou créatifs (ChatGPT et AI 
+                ), la prise de décision automatisée et la compétition au plus haut niveau dans les systèmes de jeux stratégiques (comme les échecs et le Go). 
+                (comme les échecs et le jeu de Go)."""]]
+    rest = []
+    article = """
+                Artificial intelligence (AI) is intelligence—perceiving, synthesizing, and inferring 
+                information—demonstrated by machines, as opposed to intelligence displayed by non-human 
+                animals and humans. Example tasks in which this is done include speech recognition, 
+                computer vision, translation between (natural) languages, as well as other mappings of 
+                inputs.
+                
+                AI applications include advanced web search engines (e.g., Google Search), recommendation 
+                systems (used by YouTube, Amazon, and Netflix), understanding human speech (such as Siri 
+                and Alexa), self-driving cars (e.g., Waymo), generative or creative tools (ChatGPT and AI 
+                art), automated decision-making, and competing at the highest level in strategic game systems 
+                (such as chess and Go).
+            """
+    lang = "FR"
+    auth_key = "da19e392-2688-f41f-38d5-5389e9ad7b56:fx"  # Replace with your key
+    translator = deepl.Translator(auth_key)
+    result = translator.translate_text(article, target_lang=lang)
+    rest.append(result.text)
+    score = nltk.translate.bleu_score.corpus_bleu(refs, rest)
+    res = {
+        'translation': result.text,
+        'score':score,
+        'raw': 'Successful',
+    }
+    print('json-data to be sent: ', res)
+
+    return JsonResponse(res)

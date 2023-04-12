@@ -4,6 +4,7 @@ from django.shortcuts import render
 import json
 from django.contrib.auth.models import User #####
 from django.http import JsonResponse , HttpResponse ####
+import deepl
 
 
 from transformers import pipeline, set_seed
@@ -27,3 +28,25 @@ def get_summary(request):
     print('json-data to be sent: ', data)
 
     return JsonResponse(data)
+
+def translate(request):
+    if request.method == 'PUT':
+        article = request.data.get('article', None)
+        print('article:', article)
+        lang = request.data.get('language', None)
+    else:
+        article = request.GET.get('article', None)
+        print('article:', article)
+        lang = request.GET.get('language', None)
+    auth_key = "da19e392-2688-f41f-38d5-5389e9ad7b56:fx"  # Replace with your key
+    translator = deepl.Translator(auth_key)
+
+    result = translator.translate_text(article, target_lang=lang)
+    print(result.text)  # "Bonjour, le monde !"
+    res = {
+        'translation': result.text,
+        'raw': 'Successful',
+    }
+    print('json-data to be sent: ', res)
+
+    return JsonResponse(res)

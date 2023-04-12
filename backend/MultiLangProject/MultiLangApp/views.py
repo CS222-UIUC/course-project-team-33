@@ -34,7 +34,10 @@ def translate(request):
         article = request.data.get('article', None)
         print('article:', article)
         lang = request.data.get('language', None)
-    
+    else:
+        article = request.GET.get('article', None)
+        print('article:', article)
+        lang = request.GET.get('language', None)
     auth_key = "da19e392-2688-f41f-38d5-5389e9ad7b56:fx"  # Replace with your key
     translator = deepl.Translator(auth_key)
 

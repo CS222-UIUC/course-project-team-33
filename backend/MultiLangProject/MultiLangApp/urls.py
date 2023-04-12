@@ -14,4 +14,7 @@ urlpatterns = [
     re_path(r'^test_summerizer_random/$', unittests.test_summerizer_random, name='test_summerizer_random'),
     re_path(r'^test_get_summary/$', unittests.test_get_summary, name='test_get_summary'),
     re_path(r'^translate/$', views.translate, name='translate'),
+    re_path(r'^test_translate/$', unittests.test_translate, name='test_translate'),
+    re_path(r'^test_translate2/$', unittests.test_translate2, name='test_translate2'),
+    
 ]

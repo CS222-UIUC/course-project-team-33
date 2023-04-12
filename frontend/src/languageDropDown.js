@@ -4,17 +4,25 @@ import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 import './languageDropDown.css';
 
+
+
 function LanguageSelect() {
+  
   const [open, setOpen] = useState(false);
   const [language, setLanguage] = useState('English');
-
+  
   const handleOpen = () => {
     setOpen(!open);
   };
 
   const handleLanguageClick = (languageChange) => {
     setOpen(false);
-    setLanguage(languageChange);
+    setLanguage('en-US');
+    if (languageChange === '中文') setLanguage('zh-ZH');
+    else if (languageChange === 'German') setLanguage('de-DE');
+    else if (languageChange === 'French') setLanguage('fr-FR');
+    else if (languageChange === 'Spanish') setLanguage('es-ES');
+    else if (languageChange === 'Italian') setLanguage('it-IT');
   };
 
   return (
@@ -44,6 +52,30 @@ function LanguageSelect() {
             onClick={() => handleLanguageClick('中文')}
           >
             中文
+          </div>
+          <div
+            className="menu-item"
+            onClick={() => handleLanguageClick('German')}
+          >
+            German
+          </div>
+          <div
+            className="menu-item"
+            onClick={() => handleLanguageClick('French')}
+          >
+            French
+          </div>
+          <div
+            className="menu-item"
+            onClick={() => handleLanguageClick('Spanish')}
+          >
+            Spanish
+          </div>
+          <div
+            className="menu-item"
+            onClick={() => handleLanguageClick('Italian')}
+          >
+            Italian
           </div>
         </div>
       ) : null}

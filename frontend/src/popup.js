@@ -12,6 +12,7 @@ function Popup() {
 
     const [queryText, setQueryText] = useState('');
     const [returnedSummary, setReturnedSummary] = useState('');
+    const [selecedLanguage, setLanguage] = useState('en-US');
 
     useEffect(() => {
         let data;
@@ -24,6 +25,7 @@ function Popup() {
                 },
                 body: JSON.stringify({
                     article: queryText,
+                    selecedLanguage,
                 }),
             });
 
@@ -64,7 +66,7 @@ function Popup() {
                 </div>
 
                 <div className='language-box'>
-                    <LanguageSelect />
+                    <LanguageSelect setLanguage={setLanguage} />
                 </div>
 
                 <div className="output-textbox">

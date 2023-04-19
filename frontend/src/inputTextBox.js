@@ -16,8 +16,8 @@ function myBlockStyleFn(contentBlock) {
 export default function InputTextBox({ setQueryText }) {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
 
-  function getInputText(editorState) {
-    return setQueryText(editorState.getCurrentContent().getPlainText('\u0001'));
+  function getInputText(neweditorState) {
+    return setQueryText(neweditorState.getCurrentContent().getPlainText('\u0001'));
   }
 
   return (

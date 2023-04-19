@@ -9,7 +9,7 @@ import './languageDropDown.css';
 function LanguageSelect() {
   
   const [open, setOpen] = useState(false);
-  const [language, setLanguage] = useState('English');
+  const [displayLanguage, setDisplayLanguage] = useState('English');
   
   const handleOpen = () => {
     setOpen(!open);
@@ -17,8 +17,9 @@ function LanguageSelect() {
 
   const handleLanguageClick = (languageChange) => {
     setOpen(false);
-    setLanguage('en-US');
+    setDisplayLanguage(languageChange);
     if (languageChange === '中文') setLanguage('zh-ZH');
+    else if (languageChange == 'English') setLanguage('en-US')
     else if (languageChange === 'German') setLanguage('de-DE');
     else if (languageChange === 'French') setLanguage('fr-FR');
     else if (languageChange === 'Spanish') setLanguage('es-ES');
@@ -28,7 +29,7 @@ function LanguageSelect() {
   return (
     <div className="menu-wrapper">
       <button className="menu-close" type="button" onClick={handleOpen}>
-        {language}
+        {displayLanguage}
       </button>
 
       <div className="menu-icon">

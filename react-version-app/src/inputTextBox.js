@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Editor, EditorState, ContentState } from 'draft-js';
+import { Editor, EditorState } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 
 import './inputTextBox.css';
@@ -11,7 +11,7 @@ function myBlockStyleFn(contentBlock) {
   }
 }
 
-export default function InputTextBox({ setQueryText }) {
+export default function InputTextBox({ setQueryText, readOnly }) {
   const [editorState, setEditorState] = useState(() => (
     EditorState.createEmpty()));
 
@@ -21,13 +21,14 @@ export default function InputTextBox({ setQueryText }) {
 
   return (
     <div className="text-box">
-      <Editor 
+      < Editor 
         editorState={editorState} 
         onChange={newEditorState => { 
           setEditorState(newEditorState);  
           getInputText(newEditorState);
         }}
-        blockStyleFn={myBlockStyleFn}/>
+        blockStyleFn={myBlockStyleFn}
+        readOnly={readOnly} />
     </div>
   );
 }

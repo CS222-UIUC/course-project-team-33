@@ -14,11 +14,13 @@ function myBlockStyleFn(contentBlock) {
   return '';
 }
 
-export default function InputTextBox({ setQueryText }) {
+export default function InputTextBox({ setQueryText, readOnly }) {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
 
   function getInputText(neweditorState) {
-    return setQueryText(neweditorState.getCurrentContent().getPlainText('\u0001'));
+    return setQueryText(
+      neweditorState.getCurrentContent().getPlainText('\u0001'),
+    );
   }
 
   return (
@@ -30,6 +32,7 @@ export default function InputTextBox({ setQueryText }) {
           getInputText(newEditorState);
         }}
         blockStyleFn={myBlockStyleFn}
+        readOnly={readOnly}
       />
     </div>
   );

@@ -16,5 +16,5 @@ urlpatterns = [
     re_path(r'^translate/$', views.translate, name='translate'),
     re_path(r'^test_translate/$', unittests.test_translate, name='test_translate'),
     re_path(r'^test_translate2/$', unittests.test_translate2, name='test_translate2'),
-    
+    re_path(r'^translate_and_summarize/$', views.translate_and_summarize, name='translate_and_summarize'),
 ]

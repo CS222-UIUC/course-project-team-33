@@ -11,7 +11,7 @@ function myBlockStyleFn(contentBlock) {
   }
 }
 
-export default function OutputTextBox({ returnedSummary }) {
+export default function OutputTextBox({ returnedSummary, summaryAction }) {
   const [editorState, setEditorState] = useState(() => (
     EditorState.createWithContent(ContentState.createFromText(returnedSummary))));
   
@@ -27,10 +27,16 @@ export default function OutputTextBox({ returnedSummary }) {
 
   return (
     <div className="text-box">
-      <Editor 
+      { summaryAction ?
+        <div className='loading-page'>
+          
+        </ div>
+        : 
+        <Editor 
         editorState={editorState}
         onChange={setEditorState}
         blockStyleFn={myBlockStyleFn}/>
+      }
     </div>
   );
 }

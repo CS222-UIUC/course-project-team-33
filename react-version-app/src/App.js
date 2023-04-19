@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import InputTextBox from './inputTextBox';
 import OutputTextBox from './outputTextBox';
 import { MdSummarize } from 'react-icons/md';
+import logo from './YlWC.gif';
 
 import './popup.css';
 import './languageDropDown.js';
@@ -11,6 +12,7 @@ function App() {
     const [queryText, setQueryText] = useState('');
     const [returnedSummary, setReturnedSummary] = useState('');
     const [language, setLanguage] = useState('EN-US');
+    const [summaryAction, setSummaryAction] = useState(false);
 
     useEffect(() => {
         let data;
@@ -39,7 +41,9 @@ function App() {
                 return;
             }
 
+            setSummaryAction(true);
             const response = await sendQuery(queryText);
+            setSummaryAction(false);
 
             console.log(response);
             setReturnedSummary(response);
@@ -60,7 +64,7 @@ function App() {
             <div className='out-most-wrapper'>
                 <div className="input-textbox">
                     <div className="inner">
-                        <InputTextBox setQueryText={setQueryText} />
+                        <InputTextBox setQueryText={setQueryText} readOnly={summaryAction} />
                     </div>
                 </div>
 
@@ -69,9 +73,18 @@ function App() {
                 </div>
 
                 <div className="output-textbox">
-                    <div className="inner">
-                        <OutputTextBox returnedSummary={returnedSummary} />
+                {
+                    summaryAction ? 
+                    <div className='loading-page'> 
+                       <div className='loading-page-inner'>
+                            <img src={logo} alt="loading ..." width={50} height={50} />
+                        </div>
                     </div>
+                    :
+                    <div className="inner">
+                        <OutputTextBox returnedSummary={returnedSummary} summaryAction={summaryAction}/>
+                    </div> 
+                }
                 </div>
             </div>
         </div>

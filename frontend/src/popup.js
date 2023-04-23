@@ -3,118 +3,78 @@ import { render } from 'react-dom';
 import { MdSummarize } from 'react-icons/md';
 import InputTextBox from './inputTextBox';
 import OutputTextBox from './outputTextBox';
-import logo from './YlWC.gif';
 
 import './popup.css';
 import LanguageSelect from './languageDropDown';
 
 function Popup() {
-  window.React = React;
+    window.React = React;
 
-  const [queryText, setQueryText] = useState('');
-  const [returnedSummary, setReturnedSummary] = useState('');
-  const [language, setLanguage] = useState('EN-US');
-  const [summaryAction, setSummaryAction] = useState(false);
-  const [sendQueryFlag, setSendQueryFlag] = useState(false);
+    const [queryText, setQueryText] = useState('');
+    const [returnedSummary, setReturnedSummary] = useState('');
 
-  useEffect(() => {
-    let data;
-    const sendQuery = async () => {
-      console.log('sending Query: ', queryText);
-      data = await fetch(
-        'http://localhost:8000/MultiLangApp/summarize_allLanguage/',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            article: queryText,
-            language,
-          }),
-        },
-      );
+    useEffect(() => {
+        let data;
+        const sendQuery = async (queryText) => {
+            console.log('sending Query: ', queryText);
+            data = await fetch('http://localhost:8000/MultiLangApp/post_summary/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    article: queryText,
+                }),
+            });
 
-      data = await data.json();
-      console.log('successfully summerized');
-      console.log(data);
+            data = await data.json();
+            console.log('successfully summerized');
+            console.log(data);
 
-      return data.summary;
-    };
+            return data.summary;
+        };
 
-    async function fetchData() {
-      if (queryText.length === 0) {
-        setSendQueryFlag(false);
-        return;
-      }
+        async function fetchData(queryText) {
+            const response = await sendQuery(queryText);
+            let summaryText = '';
+            for (let i = 0; i < response.length; i += 1) {
+                summaryText = summaryText + ' ' + response[i];
+            }
+            console.log(summaryText);
+            setReturnedSummary(summaryText);
+        }
+        fetchData(queryText);
+    }, [queryText]);
 
-      setSummaryAction(true);
-      const response = await sendQuery(queryText);
-      setSummaryAction(false);
-      setSendQueryFlag(false);
-
-      console.log(response);
-      setReturnedSummary(response);
-    }
-    if (sendQueryFlag) {
-      fetchData(queryText);
-    }
-  }, [queryText, language, sendQueryFlag]);
-
-  return (
-    <div className="entrance">
-      <div className="icon">
-        <MdSummarize color="rgba(254, 245, 239, 0.66)" size={35} />
-      </div>
-
-      <div className="icon-text">{'Multi-Language \n Summarizer'}</div>
-
-      <div className="out-most-wrapper">
-        <div className="input-textbox">
-          <div className="inner">
-            <InputTextBox
-              setQueryText={setQueryText}
-              readOnly={summaryAction}
-            />
-          </div>
-        </div>
-
-        <div className="language-box">
-          <LanguageSelect setLanguage={setLanguage} />
-        </div>
-
-        <div className="submit-box">
-          {!summaryAction ? (
-            <div
-              className="submit-button-active"
-              onClick={() => setSendQueryFlag(true)}
-            >
-              Submit
+    return (
+        <div className="entrance">
+            <div className="icon">
+                <MdSummarize color="rgba(254, 245, 239, 0.66)" size={35} />
             </div>
-          ) : (
-            <div className="submit-button-freeze"> </div>
-          )}
-        </div>
 
-        <div className="output-textbox">
-          {summaryAction ? (
-            <div className="loading-page">
-              <div className="loading-page-inner">
-                <img src={logo} alt="loading ..." width={50} height={50} />
-              </div>
+            <div className="icon-text">
+                {'Multi-Language \n Summarizer'}
             </div>
-          ) : (
-            <div className="inner">
-              <OutputTextBox
-                returnedSummary={returnedSummary}
-                summaryAction={summaryAction}
-              />
+
+            <div className='out-most-wrapper'>
+                <div className="input-textbox">
+                    <div className="inner">
+                        <InputTextBox setQueryText={setQueryText} />
+                    </div>
+                </div>
+
+                <div className='language-box'>
+                    <LanguageSelect />
+                </div>
+
+                <div className="output-textbox">
+                    <div className="inner">
+                        <OutputTextBox returnedSummary={returnedSummary} />
+                    </div>
+                </div>
             </div>
-          )}
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 render(<Popup />, document.getElementById('react-target'));

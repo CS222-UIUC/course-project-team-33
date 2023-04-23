@@ -1,22 +1,12 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
 import { useState } from 'react';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 import './languageDropDown.css';
 
-const LanguageOptions = {
-  English: 'EN-US',
-  Chinese: 'ZH',
-  German: 'DE',
-  French: 'FR',
-  Spanish: 'ES',
-  Italian: 'IT',
-};
-
-function LanguageSelect({ setLanguage }) {
+function LanguageSelect() {
   const [open, setOpen] = useState(false);
-  const [displayLanguage, setDisplayLanguage] = useState('English');
+  const [language, setLanguage] = useState('English');
 
   const handleOpen = () => {
     setOpen(!open);
@@ -24,14 +14,13 @@ function LanguageSelect({ setLanguage }) {
 
   const handleLanguageClick = (languageChange) => {
     setOpen(false);
-    setDisplayLanguage(languageChange);
-    setLanguage(LanguageOptions[languageChange]);
+    setLanguage(languageChange);
   };
 
   return (
     <div className="menu-wrapper">
       <button className="menu-close" type="button" onClick={handleOpen}>
-        {displayLanguage}
+        {language}
       </button>
 
       <div className="menu-icon">
@@ -44,13 +33,18 @@ function LanguageSelect({ setLanguage }) {
 
       {open ? (
         <div className="menu-open">
-          { /* eslint-disable-next-line no-unused-vars */
-          Object.entries(LanguageOptions).map(([key, _]) => (
-            <div className="menu-item" onClick={() => handleLanguageClick(key)}>
-              {key}
-            </div>
-          ))
-          }
+          <div
+            className="menu-item"
+            onClick={() => handleLanguageClick('English')}
+          >
+            English
+          </div>
+          <div
+            className="menu-item"
+            onClick={() => handleLanguageClick('中文')}
+          >
+            中文
+          </div>
         </div>
       ) : null}
     </div>

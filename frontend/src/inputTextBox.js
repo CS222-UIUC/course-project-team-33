@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { Editor, EditorState } from 'draft-js';
+import { Editor, EditorState, ContentState } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 
 import './inputTextBox.css';
@@ -14,13 +13,11 @@ function myBlockStyleFn(contentBlock) {
   return '';
 }
 
-export default function InputTextBox({ setQueryText, readOnly }) {
+export default function InputTextBox({ setQueryText }) {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
 
-  function getInputText(neweditorState) {
-    return setQueryText(
-      neweditorState.getCurrentContent().getPlainText('\u0001'),
-    );
+  function getInputText(editorState) {
+    return setQueryText(editorState.getCurrentContent().getPlainText('\u0001'));
   }
 
   return (
@@ -32,9 +29,6 @@ export default function InputTextBox({ setQueryText, readOnly }) {
           getInputText(newEditorState);
         }}
         blockStyleFn={myBlockStyleFn}
-        readOnly={readOnly}
-        // eslint-disable-next-line react/jsx-boolean-value
-        stripPastedStyles={true}
       />
     </div>
   );

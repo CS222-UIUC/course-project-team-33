@@ -1,9 +1,0 @@
-.text-box {
-    z-index: 1;
-    position: relative;
-
-    left: 10px;
-    top: 10px;
-    height: 250px;
-    width: 250px;
-}

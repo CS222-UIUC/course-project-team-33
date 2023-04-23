@@ -15,21 +15,25 @@ function Popup() {
   const [returnedSummary, setReturnedSummary] = useState('');
   const [language, setLanguage] = useState('EN-US');
   const [summaryAction, setSummaryAction] = useState(false);
+  const [sendQueryFlag, setSendQueryFlag] = useState(false);
 
   useEffect(() => {
     let data;
     const sendQuery = async () => {
       console.log('sending Query: ', queryText);
-      data = await fetch('http://localhost:8000/MultiLangApp/post_summary/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      data = await fetch(
+        'http://localhost:8000/MultiLangApp/summarize_allLanguage/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            article: queryText,
+            language,
+          }),
         },
-        body: JSON.stringify({
-          article: queryText,
-          language,
-        }),
-      });
+      );
 
       data = await data.json();
       console.log('successfully summerized');
@@ -40,18 +44,22 @@ function Popup() {
 
     async function fetchData() {
       if (queryText.length === 0) {
+        setSendQueryFlag(false);
         return;
       }
 
       setSummaryAction(true);
       const response = await sendQuery(queryText);
       setSummaryAction(false);
+      setSendQueryFlag(false);
 
       console.log(response);
       setReturnedSummary(response);
     }
-    fetchData(queryText);
-  }, [queryText, language]);
+    if (sendQueryFlag) {
+      fetchData(queryText);
+    }
+  }, [queryText, language, sendQueryFlag]);
 
   return (
     <div className="entrance">
@@ -73,6 +81,19 @@ function Popup() {
 
         <div className="language-box">
           <LanguageSelect setLanguage={setLanguage} />
+        </div>
+
+        <div className="submit-box">
+          {!summaryAction ? (
+            <div
+              className="submit-button-active"
+              onClick={() => setSendQueryFlag(true)}
+            >
+              Submit
+            </div>
+          ) : (
+            <div className="submit-button-freeze"> </div>
+          )}
         </div>
 
         <div className="output-textbox">

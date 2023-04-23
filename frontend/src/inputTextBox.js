@@ -33,6 +33,8 @@ export default function InputTextBox({ setQueryText, readOnly }) {
         }}
         blockStyleFn={myBlockStyleFn}
         readOnly={readOnly}
+        // eslint-disable-next-line react/jsx-boolean-value
+        stripPastedStyles={true}
       />
     </div>
   );

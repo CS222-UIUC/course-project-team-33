@@ -5,6 +5,15 @@ import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 import './languageDropDown.css';
 
+const LanguageOptions = {
+  English: 'EN-US',
+  Chinese: 'ZH',
+  German: 'DE',
+  French: 'FR',
+  Spanish: 'ES',
+  Italian: 'IT',
+};
+
 function LanguageSelect({ setLanguage }) {
   const [open, setOpen] = useState(false);
   const [displayLanguage, setDisplayLanguage] = useState('English');
@@ -16,11 +25,7 @@ function LanguageSelect({ setLanguage }) {
   const handleLanguageClick = (languageChange) => {
     setOpen(false);
     setDisplayLanguage(languageChange);
-    if (languageChange === '中文') {
-      setLanguage('ZH');
-    } else if (languageChange === 'English') {
-      setLanguage('EN-US');
-    }
+    setLanguage(LanguageOptions[languageChange]);
   };
 
   return (
@@ -39,18 +44,13 @@ function LanguageSelect({ setLanguage }) {
 
       {open ? (
         <div className="menu-open">
-          <div
-            className="menu-item"
-            onClick={() => handleLanguageClick('English')}
-          >
-            English
-          </div>
-          <div
-            className="menu-item"
-            onClick={() => handleLanguageClick('中文')}
-          >
-            中文
-          </div>
+          { /* eslint-disable-next-line no-unused-vars */
+          Object.entries(LanguageOptions).map(([key, _]) => (
+            <div className="menu-item" onClick={() => handleLanguageClick(key)}>
+              {key}
+            </div>
+          ))
+          }
         </div>
       ) : null}
     </div>

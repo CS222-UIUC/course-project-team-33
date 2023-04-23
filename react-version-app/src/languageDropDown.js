@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useState } from 'react';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
+import { LanguageOptions } from './languageOption';
 
 import './languageDropDown.css';
 
@@ -15,12 +16,9 @@ function LanguageSelect({ setLanguage }) {
   const handleLanguageClick = (languageChange) => {
     setOpen(false);
     setDisplayLanguage(languageChange);
-    if (languageChange === '中文') {
-      setLanguage('ZH');
-    }
-    else if (languageChange === 'English') {
-      setLanguage('EN-US');
-    }
+    setLanguage(LanguageOptions[languageChange]);
+
+    console.log(languageChange, LanguageOptions[languageChange]);
   };
 
   return (
@@ -39,18 +37,16 @@ function LanguageSelect({ setLanguage }) {
 
       {open ? (
         <div className="menu-open">
-          <div
-            className="menu-item"
-            onClick={() => handleLanguageClick("English")}
-          >
-            English
-          </div>
-          <div
-            className="menu-item"
-            onClick={() => handleLanguageClick("中文")}
-          >
-            中文
-          </div>
+        {
+          Object.entries(LanguageOptions)
+          .map( ([key, _]) => 
+            <div
+              className="menu-item"
+              onClick={() => handleLanguageClick(key)}
+            >
+              {key}
+            </div> )
+        }
         </div>
       ) : null}
     </div>

@@ -47,15 +47,44 @@ body {
 
 .language-box {
   z-index: 2;
-  position: fixed;
-  left: 310px;
-  top: 20px;
+  position: relative;
+  left: 300px;
+  top: 10px;
 
   height: 30px;
   width: 90px;
 
   text-align: right;
   font-size: small;
+}
+
+.submit-box {
+  z-index: 2;
+  position: relative;
+  left: 520px;
+  top: -12px;
+
+  height: 30px;
+  width: 60px;
+
+  text-align: right;
+  font-size: small;
+
+  font-family: "Candara";
+  letter-spacing: 1px;
+  cursor: pointer;
+  
+  color: rgb(254, 245, 239);
+}
+
+.submit-button-active:hover {
+  color: rgb(255, 255, 255);
+}
+
+.submit-button-freeze {
+  cursor: default;
+  
+  color: rgb(0, 0, 0);
 }
 
 .input-textbox {
@@ -94,15 +123,12 @@ body {
 
 /* Handle */
 .input-textbox .inner::-webkit-scrollbar-thumb {
-  border-radius: 1000000vw;
-  background: rgb(143, 141, 141);
-  border: 0.45vw solid transparent;
-  background-clip: content-box;
+  background: rgb(168, 167, 167);
 }
 
 /* Handle on hover */
 .input-textbox .inner::-webkit-scrollbar-thumb:hover {
-  background: rgb(143, 141, 141);
+  background: rgb(113, 110, 110);
 }
 
 .output-textbox {

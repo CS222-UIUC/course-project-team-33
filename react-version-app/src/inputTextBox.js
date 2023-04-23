@@ -28,7 +28,8 @@ export default function InputTextBox({ setQueryText, readOnly }) {
           getInputText(newEditorState);
         }}
         blockStyleFn={myBlockStyleFn}
-        readOnly={readOnly} />
+        readOnly={readOnly}
+        stripPastedStyles={true} />
     </div>
   );
 }

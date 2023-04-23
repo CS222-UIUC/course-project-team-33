@@ -46,15 +46,44 @@
 
 .language-box {
   z-index: 2;
-  position: fixed;
-  left: 310px;
-  top: 20px;
+  position: relative;
+  left: 300px;
+  top: 10px;
 
   height: 30px;
   width: 90px;
 
   text-align: right;
   font-size: small;
+}
+
+.submit-box {
+  z-index: 2;
+  position: relative;
+  left: 520px;
+  top: -12px;
+
+  height: 30px;
+  width: 60px;
+
+  text-align: right;
+  font-size: small;
+
+  font-family: "Candara";
+  letter-spacing: 1px;
+  cursor: pointer;
+  
+  color: rgb(254, 245, 239);
+}
+
+.submit-button-active:hover {
+  color: rgb(255, 255, 255);
+}
+
+.submit-button-freeze {
+  cursor: default;
+  
+  color: rgb(0, 0, 0);
 }
 
 .input-textbox {

@@ -1,19 +1,14 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { Editor, EditorState, ContentState } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 
 import './inputTextBox.css';
 
-function myBlockStyleFn(contentBlock) {
-  const type = contentBlock.getType();
-  if (type === 'blockquote') {
-    return 'superFancyBlockquote';
-  }
-}
-
-export default function OutputTextBox({ returnedSummary }) {
-  const [editorState, setEditorState] = useState(() => (
-    EditorState.createWithContent(ContentState.createFromText(returnedSummary))));
+export default function OutputTextBox({ returnedSummary, summaryAction }) {
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createWithContent(ContentState.createFromText(returnedSummary)));
 
   useEffect(() => {
     function updateOutputBox() {
@@ -27,11 +22,14 @@ export default function OutputTextBox({ returnedSummary }) {
 
   return (
     <div className="text-box">
-      <Editor
-        editorState={editorState}
-        onChange={setEditorState}
-        blockStyleFn={myBlockStyleFn}
-      />
+      {summaryAction ? (
+        <div className="loading-page" />
+      ) : (
+        <Editor
+          editorState={editorState}
+          onChange={setEditorState}
+        />
+      )}
     </div>
   );
 }

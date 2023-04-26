@@ -74,5 +74,4 @@ We have serveral endpoints to use:
 
 3. Or you can combine the two above endpoint together to directly translate your article using endpoint /translate_and_summarize which take same argument as /translate
 
-
 For any endpoint, you will receive a article and a signal tells you it is success/fail

@@ -1,0 +1,8 @@
+{
+    "manifest_version": 3,
+    "name": "Multi-Language Summarizer",
+    "version": "1.0.1",
+    "action": {
+        "default_popup": "popup.html"
+    }
+}

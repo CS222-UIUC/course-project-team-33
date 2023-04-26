@@ -1,7 +1,5 @@
 # CS222 Project Backend Development
-#### Group members:
-* Carmen Zheng
-* Tianwei Qing
+#### Backend Group members:
 * Zirui Wang
 * Zihan Ming
 
@@ -75,6 +73,5 @@ We have serveral endpoints to use:
     It only take one argument which is the article
 
 3. Or you can combine the two above endpoint together to directly translate your article using endpoint /translate_and_summarize which take same argument as /translate
-
 
 For any endpoint, you will receive a article and a signal tells you it is success/fail

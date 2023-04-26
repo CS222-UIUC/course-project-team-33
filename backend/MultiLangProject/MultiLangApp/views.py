@@ -30,14 +30,16 @@ def get_summary(request):
     return JsonResponse(data)
 
 def translate(request):
-    if request.method == 'PUT':
-        article = request.data.get('article', None)
+    if request.method == 'POST':
+        article = json.loads(request.body.decode("utf-8")).get('article')
         print('article:', article)
-        lang = request.data.get('language', None)
+        lang = json.loads(request.body.decode("utf-8")).get('language')
+        print('language:', lang)
     else:
         article = request.GET.get('article', None)
         print('article:', article)
         lang = request.GET.get('language', None)
+        print('language:', lang)
     auth_key = "da19e392-2688-f41f-38d5-5389e9ad7b56:fx"  # Replace with your key
     translator = deepl.Translator(auth_key)
 
@@ -54,9 +56,11 @@ def translate(request):
 
 #combine two above
 def translate_and_summarize(request):
-    if request.method == 'PUT':
-        article = request.data.get('article', None)
-        lang = request.data.get('language', None)
+    if request.method == 'POST':
+        article = json.loads(request.body.decode("utf-8")).get('article')
+        print('article:', article)
+        lang = json.loads(request.body.decode("utf-8")).get('language')
+        print('language:', lang)
     else:
         article = request.GET.get('article', None)
         lang = request.GET.get('language', None)
@@ -73,8 +77,9 @@ def translate_and_summarize(request):
         }
 
         # Get summary of translated article
+        max_length = len(article.split()) // 3
         summarizer = pipeline("summarization")
-        summary = summarizer(translation['translation'], max_length=130, min_length=30, do_sample=False)[0]
+        summary = summarizer(translation['translation'], max_length=max_length, min_length=30, do_sample=False)[0]
         summary_data = {
             'summary': summary['summary_text'],
             'raw': 'Successful',
@@ -84,6 +89,48 @@ def translate_and_summarize(request):
             'translation': translation['translation'],
             'summary': summary_data['summary'],
             'raw': translation['raw'],
+        }
+    except:
+        data = {
+            'error': 'Translation or summarization failed',
+        }
+
+    return JsonResponse(data)
+
+#combine two above
+def summarize_allLanguage(request):
+    if request.method == 'POST':
+        article = json.loads(request.body.decode("utf-8")).get('article')
+        print('article:', article)
+        lang = json.loads(request.body.decode("utf-8")).get('language')
+        print('language:', lang)
+    else:
+        article = request.GET.get('article', None)
+        lang = request.GET.get('language', None)
+
+    auth_key = "da19e392-2688-f41f-38d5-5389e9ad7b56:fx"  # Replace with your key
+    translator = deepl.Translator(auth_key)
+
+    try:
+        # Translate article to English
+        result = translator.translate_text(article, target_lang='EN-US')
+        pretranslate_article = result.text
+
+        # Get summary of translated article
+        max_length = max(len(pretranslate_article.split()) // 3, 130)
+        min_length = min(30, len(pretranslate_article.split()))
+        summarizer = pipeline("summarization")
+        summary = summarizer(pretranslate_article, max_length=max_length, min_length=min_length, do_sample=False)[0]
+        summarized_text = summary['summary_text']
+
+        if lang != 'EN-US' :
+            # Translate article to requested language
+            result = translator.translate_text(summarized_text, target_lang=lang)
+            summarized_text = result.text
+
+        data = {
+            'summary': summarized_text,
+            'status': 'Successful',
         }
     except:
         data = {

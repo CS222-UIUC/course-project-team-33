@@ -76,9 +76,9 @@ ___Multi-Language___ is a chrome web extension that reduces the amount of time s
     git clone https://github.com/CS222-UIUC/course-project-team-33.git
     ```
 2. Open your Chrome browser and go to `chrome://extensions/`
-3. Enable the developer mode
-    ![Developer Mode](./images/developermode.png)
 
+3. Enable the developer mode
+    
 4. Click `Load Unpacked` button on the left corner
   ![Load Unpack](./images/loadunpack.png)
 

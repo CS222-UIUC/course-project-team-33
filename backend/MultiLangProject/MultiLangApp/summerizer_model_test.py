@@ -4,7 +4,7 @@ from torchmetrics.text.rouge import ROUGEScore
 from pprint import pprint
 
 # Load the test dataset
-dataset = load_dataset('cnn_dailymail', '3.0.0', split='test[:10]')
+dataset = load_dataset('cnn_dailymail', '3.0.0', split='test')
 
 # Initialize the Pegasus tokenizer and model
 tokenizer = PegasusTokenizer.from_pretrained('google/pegasus-cnn_dailymail')
@@ -15,12 +15,16 @@ model = PegasusForConditionalGeneration.from_pretrained('google/pegasus-cnn_dail
 references = []
 predictions = []
 rougescore = []
+alpha = 0.2
 rouge = ROUGEScore()
 
-i = 0
-for example in dataset:
-    if i == 5:
+
+for i in range(len(dataset)):
+    if i == 100:
         break
+    if i % 10 == 0:
+        print("num example:",i)
+    example = dataset[i]
     input_ids = tokenizer.encode(example['article'], truncation=True, padding='max_length', max_length=1024, return_tensors='pt')
     output_ids = model.generate(input_ids, max_length=128, num_beams=4, early_stopping=True)
     reference = example['highlights']
